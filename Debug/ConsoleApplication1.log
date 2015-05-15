@@ -1,0 +1,29 @@
+﻿Build started 2015/5/14 19:24:06.
+     1>Project "C:\Users\flybird1971\documents\visual studio 2013\Projects\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         D:\viualstatio\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp"Debug\ConsoleApplication1.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
+         stdafx.cpp
+     1>c:\users\flybird1971\documents\visual studio 2013\projects\consoleapplication1\consoleapplication1\stdafx.cpp(98): warning C4101: 'ele' : unreferenced local variable
+         D:\viualstatio\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\ConsoleApplication1.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt basic_operator.cpp ConsoleApplication1.cpp db_list.cpp queue.cpp
+         queue.cpp
+         db_list.cpp
+     1>c:\users\flybird1971\documents\visual studio 2013\projects\consoleapplication1\consoleapplication1\db_list.cpp(108): warning C4101: 'pNext' : unreferenced local variable
+     1>c:\users\flybird1971\documents\visual studio 2013\projects\consoleapplication1\consoleapplication1\db_list.cpp(120): warning C4101: 'pNext' : unreferenced local variable
+     1>c:\users\flybird1971\documents\visual studio 2013\projects\consoleapplication1\consoleapplication1\db_list.cpp(137): warning C4101: 'pNext' : unreferenced local variable
+         Generating Code...
+         Skipping... (no relevant changes detected)
+         ConsoleApplication1.cpp
+         basic_operator.cpp
+       Link:
+         D:\viualstatio\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\flybird1971\documents\visual studio 2013\Projects\ConsoleApplication1\Debug\ConsoleApplication1.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\flybird1971\documents\visual studio 2013\Projects\ConsoleApplication1\Debug\ConsoleApplication1.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\flybird1971\documents\visual studio 2013\Projects\ConsoleApplication1\Debug\ConsoleApplication1.lib" /MACHINE:X86 Debug\basic_operator.obj
+         Debug\ConsoleApplication1.obj
+         Debug\db_list.obj
+         Debug\queue.obj
+         Debug\stdafx.obj
+     1>LINK : warning LNK4067: ambiguous entry point; selected 'mainCRTStartup'
+         ConsoleApplication1.vcxproj -> C:\Users\flybird1971\documents\visual studio 2013\Projects\ConsoleApplication1\Debug\ConsoleApplication1.exe
+     1>Done Building Project "C:\Users\flybird1971\documents\visual studio 2013\Projects\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:02.54
