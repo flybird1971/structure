@@ -85,6 +85,8 @@
     <ClInclude Include="db_list.h" />
     <ClInclude Include="error_code.h" />
     <ClInclude Include="extends.h" />
+    <ClInclude Include="matrixEx.h" />
+    <ClInclude Include="matrix_test.h" />
     <ClInclude Include="maze_test.h" />
     <ClInclude Include="queue.h" />
     <ClInclude Include="queue_test.h" />
@@ -101,6 +103,8 @@
     <ClCompile Include="ConsoleApplication1.cpp" />
     <ClCompile Include="db_link_test.cpp" />
     <ClCompile Include="db_list.cpp" />
+    <ClCompile Include="matrixExcpp.cpp" />
+    <ClCompile Include="matrix_test.cpp" />
     <ClCompile Include="maze_test.cpp" />
     <ClCompile Include="queue.cpp" />
     <ClCompile Include="queue_test.cpp" />

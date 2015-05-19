@@ -69,6 +69,12 @@
     <ClInclude Include="maze_test.h">
       <Filter>test\testSource</Filter>
     </ClInclude>
+    <ClInclude Include="matrix_test.h">
+      <Filter>test\testHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="matrixEx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -106,6 +112,12 @@
     </ClCompile>
     <ClCompile Include="maze_test.cpp">
       <Filter>test\testHeader</Filter>
+    </ClCompile>
+    <ClCompile Include="matrix_test.cpp">
+      <Filter>test\testSource</Filter>
+    </ClCompile>
+    <ClCompile Include="matrixExcpp.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

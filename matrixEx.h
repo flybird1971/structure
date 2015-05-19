@@ -1,12 +1,12 @@
 /*
- * 矩阵表示及常见矩阵运算
- * 
- * author flybird1971@gmail.com
- * since  2015-05-17
- */
+* 矩阵表示及常见矩阵运算
+*
+* author flybird1971@gmail.com
+* since  2015-05-17
+*/
 
 #pragma once
-/*
+
 #include <stdio.h>
 #include <iostream>
 
@@ -16,15 +16,15 @@ typedef struct MATRIX_TYPE{
 	eleMatrixType * val;
 	unsigned rows;
 	unsigned cols;
-}matrix,*pMatrix;
+}matrix, *pMatrix;
 
 //稀疏矩阵
 typedef struct SPARSE_MATRIX{
-	int (*val)[3];
-	unsigned size,rows,cols;
+	int(*val)[3];
+	unsigned size, rows, cols;
 }sparseMatrix, *pSparseMatrix;
 
-bool initMatrix(matrix &matr,unsigned rows,unsigned cols);
+bool initMatrix(matrix &matr, unsigned rows, unsigned cols);
 
 bool destoryMatrix(matrix &matr);
 
@@ -40,14 +40,14 @@ bool multiplicationMatrix(matrix multipled, matrix multiple, matrix &result); //
 
 bool transposeMatrix(matrix val, matrix &result); //转置
 
-void showMatrix(matrix matr);
+bool showMatrix(matrix matr);
 
-// ---------------------------- 稀疏矩阵 操作 ---------------------------------
-bool initSparseMatrix(sparseMatrix &matr, unsigned rows, unsigned cols);
+/* ---------------------------- 稀疏矩阵 操作 ---------------------------------*/
+bool initSparseMatrix(sparseMatrix &matr);
 
 bool destorySparseMatrix(sparseMatrix &matr);
 
-bool assignSparseMatrix(sparseMatrix &matr, eleMatrixType val[],int length);
+bool assignSparseMatrix(sparseMatrix &matr, int(*val)[3], int length, int rows, int cols);
 
 bool assignSparseMatrix(sparseMatrix &matr, sparseMatrix val);
 
@@ -59,10 +59,9 @@ bool multiplicationSparseMatrix(sparseMatrix multipled, sparseMatrix multiple, s
 
 bool transposeSparseMatrix(sparseMatrix val, sparseMatrix &result); //转置
 
-void showSparseMatrix(sparseMatrix matr);
+bool showSparseMatrix(sparseMatrix matr);
 
 int * trasition(sparseMatrix &val);
-//*/
 
 
 
