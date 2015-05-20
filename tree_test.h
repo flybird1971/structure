@@ -8,10 +8,10 @@
 #include <stdio.h>
 #include "error_code.h"
 #include "tree.h"
-//#include "bTree.h"
+#include "bTree.h"
 
 void debugTree();   //普通树调试
-//void debugBTree();  //二叉树调试
+void debugBTree();  //二叉树调试
 
 //void haffmanTree();  //哈弗曼树
 //void haffmanEcode(); //哈弗曼加密，编码

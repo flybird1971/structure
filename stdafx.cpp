@@ -21,7 +21,8 @@ void main(){
 
 	cout << "............... start ...................... "<<endl;
 	//Ê÷
-	debugTree();
+	//debugTree();
+	debugBTree();   //¶þ²æÊ÷µ÷ÊÔ
 
 	//¾ØÕóÔËËãµ÷ÊÔ
 	//debugMatrix();

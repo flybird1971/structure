@@ -111,3 +111,113 @@ void debugTree(){
 	destoryTree(pTr);
 	destoryTree(pTrCopy);
 }
+
+//二叉树调试
+void debugBTree(){
+	
+	//创建二叉树
+	pBTree pbTree = createBTree('A');
+	cout << "----------------- create tree root  -------------------" << endl;
+	traversalBTree(pbTree, dealBT, BIN_TREE_TRAVERSAL_PREORDER);
+
+	//以数组形式创建二叉树
+	bTreeType val[31] = { 'A', 'B', 'C', 'D', '#', '#', 'H',
+		'#', 'G', '#', '#', '#', '#', 'W', 'L', '#', '#', '#', '#', '#','#',
+		'#', '#', '#', '#', '#', '#','M', '#', '#', '#' };
+	pBTree pbTree2 = createBTree(val, 31, 1);  
+	cout <<endl<< "----------------- array to bin tree -------------------" << endl;
+	traversalBTree(pbTree2, dealBT, BIN_TREE_TRAVERSAL_PREORDER);
+
+	//使用已经存在的二叉树，进行创建
+	pBTree pbTree3 = createBTree(pbTree2);   
+	cout << endl << "----------------- tree to bin tree -------------------" << endl;
+	traversalBTree(pbTree3, dealBT, BIN_TREE_TRAVERSAL_PREORDER);
+
+	//插入数据
+	pBTree pTmpBT = locateBTree(pbTree2, '0');
+	pBTree newPos = insertBTree(pTmpBT, '2', BIN_TREE_DIRECTOR_RIGHT);   
+	cout << endl << "----------------- tree to bin tree -------------------" << endl;
+	traversalBTree(pTmpBT, dealBT, BIN_TREE_TRAVERSAL_PREORDER);
+	if (newPos == NULL){
+		cout << "插入数据失败" << endl;
+	}else{
+		cout << "插入数据为 : " << newPos->val << endl;
+	}
+
+	//插入子树
+	pBTree pTmpBT2 = locateBTree(pbTree2,'D');
+	pBTree pChird  = locateBTree(pbTree2, 'H');
+	pBTree newPos2 = insertBTree(pTmpBT2, pChird, BIN_TREE_DIRECTOR_LEFT); 
+	cout << endl << "----------------- tree to bin tree -------------------" << endl;
+	traversalBTree(pTmpBT2, dealBT, BIN_TREE_TRAVERSAL_PREORDER); cout << endl;
+	traversalBTree(pChird, dealBT, BIN_TREE_TRAVERSAL_PREORDER); cout << endl;
+	traversalBTree(newPos2, dealBT, BIN_TREE_TRAVERSAL_PREORDER);
+	if (newPos2 == NULL){
+		cout << "插入数据失败" << endl;
+	}else{
+		cout << "插入数据为 : " << newPos2->val << endl;
+	}
+
+	//删除节点
+	cout << endl << "----------------- before delete & bin tree -------------------" << endl;
+	traversalBTree(pbTree3, dealBT, BIN_TREE_TRAVERSAL_PREORDER); cout << endl;
+	if (deleteBTree(pbTree3, '0') == false){
+		cout << "删除失败" << endl;
+	}else{
+		cout << "删除成功 : " << endl;
+	}
+	cout << endl << "----------------- after delete & bin tree -------------------" << endl;
+	traversalBTree(pbTree3, dealBT, BIN_TREE_TRAVERSAL_PREORDER); cout << endl;
+
+	//获取父节点
+	pBTree pParent =  getBTreeParent(pbTree3, 'B');     
+	if (pParent == NULL){
+		cout << "获取父节点失败" << endl;
+	}
+	else{
+		cout << "获取父节点为 : " << pParent->val << endl;
+	}
+
+	//获取兄弟节点
+	pBTree pSiling = getBTreeSibling(pbTree3, 'B');
+	if (pSiling == NULL){
+		cout << "获取兄弟点失败" << endl;
+	}
+	else{
+		cout << "获取兄弟点为 : " << pSiling->val << endl;
+	}
+
+	//获取左孩子
+	pBTree pLeft = getBTreeLeftChird(pbTree3, 'B');
+	if (pLeft == NULL){
+		cout << "获取左孩子失败" << endl;
+	}
+	else{
+		cout << "获取左孩子为 : " << pLeft->val << endl;
+	}
+
+	//获取右孩子
+	pBTree pRight = getBTreeRightChird(pbTree3, 'B');
+	if (pRight == NULL){
+		cout << "获取右孩子点失败" << endl;
+	}
+	else{
+		cout << "获取右孩子点为 : " << pRight->val << endl;
+	}
+
+	//获取树深
+	deleteBTree(pbTree3, '0');
+	int depth = getBTreeDepth(pbTree3);  
+	cout << "tree depth is : " << depth << endl;
+	
+	//判断是否为空
+	pBTree pt = NULL;
+	if (isEmptyBTree(pt) == false){
+		cout << "tree is  not empty " << endl;
+	}else{
+		cout << "tree is empty" << endl;
+	}
+	destoryBTree(pbTree);
+	destoryBTree(pbTree2);
+	destoryBTree(pbTree3);
+}
