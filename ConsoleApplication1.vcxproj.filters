@@ -75,6 +75,15 @@
     <ClInclude Include="matrixEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="tree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="bTree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tree_test.h">
+      <Filter>test\testHeader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -118,6 +127,15 @@
     </ClCompile>
     <ClCompile Include="matrixExcpp.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="bTree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tree_test.cpp">
+      <Filter>test\testSource</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,11 +1,12 @@
-﻿Build started 2015/5/19 12:57:59.
+﻿Build started 2015/5/20 17:44:20.
      1>Project "C:\Users\flybird1971\Documents\Visual Studio 2013\Projects\ConsoleApplication1.bak\ConsoleApplication1\ConsoleApplication1.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         D:\viualstatio\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\ConsoleApplication1.pch" /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt matrix_test.cpp
-         matrix_test.cpp
+         D:\viualstatio\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\ConsoleApplication1.pch" /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt tree_test.cpp
+         tree_test.cpp
        Link:
          D:\viualstatio\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\flybird1971\Documents\Visual Studio 2013\Projects\ConsoleApplication1.bak\Release\ConsoleApplication1.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\flybird1971\Documents\Visual Studio 2013\Projects\ConsoleApplication1.bak\Release\ConsoleApplication1.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\flybird1971\Documents\Visual Studio 2013\Projects\ConsoleApplication1.bak\Release\ConsoleApplication1.lib" /MACHINE:X86 /SAFESEH Release\array_link_test.obj
          Release\basic_operator.obj
+         Release\bTree.obj
          Release\circle_queue.obj
          Release\ConsoleApplication1.obj
          Release\db_link_test.obj
@@ -18,6 +19,8 @@
          Release\stack.obj
          Release\stack_test.obj
          Release\stdafx.obj
+         Release\tree.obj
+         Release\tree_test.obj
      1>LINK : warning LNK4067: ambiguous entry point; selected 'mainCRTStartup'
          Generating code
          Finished generating code
@@ -26,4 +29,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.62
+Time Elapsed 00:00:01.59

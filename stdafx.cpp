@@ -11,6 +11,7 @@
 #include "db_link_test.h"
 #include "maze_test.h"
 #include "matrix_test.h"
+#include "tree_test.h"
 
 using namespace std;
 
@@ -19,10 +20,12 @@ using namespace std;
 void main(){
 
 	cout << "............... start ...................... "<<endl;
+	//树
+	debugTree();
 
 	//矩阵运算调试
 	//debugMatrix();
-	debugSparseMatrix();
+	//debugSparseMatrix();
 
 	//栈
 	//maze();  //需要修改stack.h & stack.cpp & maze.h & maze.cpp文件
