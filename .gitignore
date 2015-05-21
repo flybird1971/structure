@@ -10,6 +10,8 @@
 *.write.1.tlog
 *.command.1.tlog
 *.log
+Release/ConsoleApplication1.log
+Release/vc120.pdb
 Release/ConsoleApplication1.obj
 *.vcxproj
 *.filters
