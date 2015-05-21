@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include "error_code.h"
 
-const int ARRAY_QUEUE_LENGTH = 100;
+const int ARRAY_QUEUE_LENGTH = 1000;
 typedef int arrayQueueType;
 
 //½Úµã

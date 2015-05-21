@@ -230,7 +230,7 @@ void findLeafPath(){
 		'#', '#', '#', '#', '#', '#', 'M', '#', '#', '#' };
 	pBTree pbTree = createBTree(val, 31, 1);
 	cout << endl << "----------------- array to bin tree -------------------" << endl;
-	//traversalBTree(pbTree, dealBT, BIN_TREE_TRAVERSAL_PREORDER);
+	traversalBTree(pbTree, dealBT, BIN_TREE_TRAVERSAL_PREORDER);
 	pBTree pTmp = locateBTree(pbTree, 'C');
 	pBTree pInsert = locateBTree(pbTree, 'L');
 	insertBTree(pInsert, pTmp, BIN_TREE_DIRECTOR_LEFT);

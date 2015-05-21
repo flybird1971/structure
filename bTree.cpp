@@ -180,7 +180,7 @@ bool traversalBTree(pBTree pTr, dealBTEx dealBTreeEx, int order, stack &Stack){
 	if (order == BIN_TREE_TRAVERSAL_PREORDER) dealBTreeEx(pTr,Stack);
 	if(traversalBTree(pTr->leftChird, dealBTreeEx, order,Stack)==true) popStack(Stack, val);
 	if (order == BIN_TREE_TRAVERSAL_INORDER) dealBTreeEx(pTr, Stack);
-	if(traversalBTree(pTr->rightChird, dealBTreeEx, order, Stack)) popStack(Stack, val);
+	if(traversalBTree(pTr->rightChird, dealBTreeEx, order, Stack)==true) popStack(Stack, val);
 	if (order == BIN_TREE_TRAVERSAL_POSTORDER) dealBTreeEx(pTr, Stack);
 	return true;
 }
