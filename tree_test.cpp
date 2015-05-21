@@ -221,3 +221,24 @@ void debugBTree(){
 	destoryBTree(pbTree2);
 	destoryBTree(pbTree3);
 }
+
+//查找并打印每个叶子的路径
+void findLeafPath(){
+	//以数组形式创建二叉树
+	bTreeType val[31] = { 'A', 'B', 'C', 'D', '#', '#', 'H',
+		'#', 'G', '#', '#', '#', '#', 'W', 'L', '#', '#', '#', '#', '#', '#',
+		'#', '#', '#', '#', '#', '#', 'M', '#', '#', '#' };
+	pBTree pbTree = createBTree(val, 31, 1);
+	cout << endl << "----------------- array to bin tree -------------------" << endl;
+	//traversalBTree(pbTree, dealBT, BIN_TREE_TRAVERSAL_PREORDER);
+	pBTree pTmp = locateBTree(pbTree, 'C');
+	pBTree pInsert = locateBTree(pbTree, 'L');
+	insertBTree(pInsert, pTmp, BIN_TREE_DIRECTOR_LEFT);
+	traversalBTree(pbTree, dealBT, BIN_TREE_TRAVERSAL_PREORDER);
+
+	stack Stack;
+	initStack(Stack);
+	cout << endl;
+	traversalBTree(pbTree, dealBTreeEx, BIN_TREE_TRAVERSAL_PREORDER,Stack);
+}
+

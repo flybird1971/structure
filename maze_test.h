@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include "error_code.h"
 #include "stack.h"
-//*
+/*
 
 typedef int(direction)[4]; //定义方向数据类型
 
