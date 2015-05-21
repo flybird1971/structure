@@ -3,7 +3,8 @@
 *.dll  
 *.exe  
 *.o  
-*.so 
+*.so
+*.obj
 *.vcxproj
 *.filters
 Release/*
