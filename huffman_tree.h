@@ -14,10 +14,12 @@
 #include "circle_queue.h"
 #include<stdio.h>
 
+using namespace std;
+
 const int DYNAMIC_ADD_STEP = 20;
 const int MAX_WEIGHT = 100000;
 const int MAP_LENGTH = 128;
-const int MAX_BUFFER = 1000;
+const int MAX_BUFFER = 100;
 
 //哈弗曼树 节点定义
 typedef  struct huffman_node{
@@ -28,22 +30,26 @@ typedef  struct huffman_node{
 	int   parentNode;
 }huffman,*pHuffman;
 
-typedef string*  codeMap;
+typedef string(codeMap)[MAP_LENGTH];
+typedef void(*dealHufman)(pHuffman, int, codeMap);
 
 //********************* 基本操作 ***********************
 pHuffman initHuffman(pHuffman pHuffm, int length);
-
-bool createHuffman(pHuffman pHuffm,int length,int &size);
-
+bool createHuffman(pHuffman &pHuffm, int length, int allowUseSize, int size);
+void getMin(pHuffman pHuffm, int length, int &lastIndex);
 bool destoryHuffman(pHuffman &pHuffm);
+int findHuffmanTreeRoot(pHuffman pHuffm);
 
-bool uncompress(const char* inFile, const char* outFile);
-
-//get path
-bool getPath(pHuffman pHuffm, codeMap &map, stack &Stack);
-bool recoverInfos(pHuffman pHuffm, FILE* &inHandle, FILE* &outHnadle);
 pHuffman readHeaderInfos(FILE* &inHandle, int &length);
-//get two min ele
-void getTwoMin(pHuffman pHuffm, int length, int &lastIndex, int &secondIndex);
+bool uncompress(const char* inFile, const char* outFile);
+bool recoverInfos(pHuffman pHuffm, FILE* &inHandle, FILE* &outHnadle);
 
+pHuffman countFrequncy(const char* inFile, int &length);
+bool compress(const char* inFile, const char* outFile);
+bool getPath(pHuffman pHuffm, int offset, dealHufman dealF, codeMap map);
+bool compressInfos(codeMap &map, FILE* &inHandle, FILE* &outHnadle);
+void dealHuffman(pHuffman pHuffm, int offset, codeMap map);
 
+void show(pHuffman pHuffm);
+pHuffman compactMap(pHuffman pHuffm, int &length);
+bool decode(pHuffman pHuffm, int root, int currentIndex, string code, string &val);

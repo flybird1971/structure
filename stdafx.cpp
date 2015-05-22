@@ -23,7 +23,9 @@ void main(){
 	//树
 	//debugTree();
 	//debugBTree();   //二叉树调试
-	findLeafPath();
+	//findLeafPath();
+	//haffmanTree();
+	haffmanEcode();
 
 	//矩阵运算调试
 	//debugMatrix();
