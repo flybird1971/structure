@@ -22,7 +22,10 @@ void main(){
 	cout << "............... start ...................... "<<endl;
 	//Ê÷
 	//debugTree();
-	debugBTree();   //¶þ²æÊ÷µ÷ÊÔ
+	//debugBTree();   //¶þ²æÊ÷µ÷ÊÔ
+	//findLeafPath();
+	//haffmanTree();
+	//haffmanEcode();
 
 	//¾ØÕóÔËËãµ÷ÊÔ
 	//debugMatrix();

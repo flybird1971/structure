@@ -12,7 +12,8 @@
 #include "maze_test.h"
 
 using namespace std;
-//*
+/*
+
 //栈应用三：迷宫求解 需要修改stack.h文件
 int maze(){
 	//初始化

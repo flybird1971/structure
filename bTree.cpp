@@ -173,7 +173,30 @@ bool traversalBTree(pBTree pTr, dealBTree dealBTS,int order){
 	return true;
 }
 
+//前序遍历 中序遍历 后序遍历
+bool traversalBTree(pBTree pTr, dealBTEx dealBTreeEx, int order, stack &Stack){
+	char val = '\0';
+	if (pTr == NULL) return false;
+	if (order == BIN_TREE_TRAVERSAL_PREORDER) dealBTreeEx(pTr,Stack);
+	if(traversalBTree(pTr->leftChird, dealBTreeEx, order,Stack)==true) popStack(Stack, val);
+	if (order == BIN_TREE_TRAVERSAL_INORDER) dealBTreeEx(pTr, Stack);
+	if(traversalBTree(pTr->rightChird, dealBTreeEx, order, Stack)==true) popStack(Stack, val);
+	if (order == BIN_TREE_TRAVERSAL_POSTORDER) dealBTreeEx(pTr, Stack);
+	return true;
+}
+
 //遍历处理器
 void dealBT(bTreeType &val){
 	cout << val << "\t";
+}
+
+//遍历处理器
+void dealBTreeEx(pBTree pTr, stack &Stack){
+	char val = '\0';
+	pushStack(Stack, pTr->val);
+	int depth = getBTreeDepth(pTr);
+	if (depth == 1){
+		cout << " leaf path is : " << endl;
+		travservalStack(Stack);
+	}
 }

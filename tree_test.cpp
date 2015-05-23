@@ -221,3 +221,88 @@ void debugBTree(){
 	destoryBTree(pbTree2);
 	destoryBTree(pbTree3);
 }
+
+//查找并打印每个叶子的路径
+void findLeafPath(){
+	//以数组形式创建二叉树
+	bTreeType val[31] = { 'A', 'B', 'C', 'D', '#', '#', 'H',
+		'#', 'G', '#', '#', '#', '#', 'W', 'L', '#', '#', '#', '#', '#', '#',
+		'#', '#', '#', '#', '#', '#', 'M', '#', '#', '#' };
+	pBTree pbTree = createBTree(val, 31, 1);
+	cout << endl << "----------------- array to bin tree -------------------" << endl;
+	traversalBTree(pbTree, dealBT, BIN_TREE_TRAVERSAL_PREORDER);
+	pBTree pTmp = locateBTree(pbTree, 'C');
+	pBTree pInsert = locateBTree(pbTree, 'L');
+	insertBTree(pInsert, pTmp, BIN_TREE_DIRECTOR_LEFT);
+	traversalBTree(pbTree, dealBT, BIN_TREE_TRAVERSAL_PREORDER);
+
+	stack Stack;
+	initStack(Stack);
+	cout << endl;
+	traversalBTree(pbTree, dealBTreeEx, BIN_TREE_TRAVERSAL_PREORDER,Stack);
+}
+
+void haffmanTree(){
+	huffman pHuffm[9] = {};
+	pHuffm[0].weight = 10; pHuffm[0].val = 'A';		pHuffm[1].weight = 2;  pHuffm[1].val = 'B';
+	pHuffm[2].weight = 8;  pHuffm[2].val = 'C';		pHuffm[3].weight = 5;  pHuffm[3].val = 'D';
+	pHuffm[4].weight = 15; pHuffm[4].val = 'E';		pHuffm[5].weight = 20; pHuffm[5].val = 'F';
+	pHuffm[6].weight = 1;  pHuffm[6].val = 'G';		pHuffm[7].weight = 4;  pHuffm[7].val = 'H';
+	pHuffm[8].weight = 7;  pHuffm[8].val = 'I';
+	pHuffman huffmTree = initHuffman(pHuffm, 9);
+	
+	codeMap map = {};
+	show(huffmTree);
+	int root = findHuffmanTreeRoot(huffmTree);
+	getPath(huffmTree, root, dealHuffman, map);
+	cout << "--------------------------------------------------" << endl;
+	printArr(map,MAX_BUFFER);
+	cout << "--------------------------------------------------" << endl;
+	int length = 0;
+	string val;
+	string code = "000011011111";
+	decode(huffmTree, root, code, val,length);
+	cout << "decode 000 is " << val << endl;
+	destoryHuffman(huffmTree);
+}
+
+//哈弗曼加密，编码,压缩
+void haffmanEcode(){
+	//int count = 0;
+	//pHuffman pHuffm = countFrequncy("ReadMe.txt",count);
+	//printBasicDatas(pHuffm, count);
+	//pHuffm = initHuffman(pHuffm, count);
+	//cout << "**********************************************" << endl;
+	//show(pHuffm);
+	
+	//cout << "**********************************************" << endl;
+	//codeMap map = {};
+	//int root = findHuffmanTreeRoot(pHuffm);
+	//getPath(pHuffm, root, dealHuffman, map);
+	//printArr(map,MAX_BUFFER);
+
+	if (compress("ReadMe.txt", "readme.lxg") == false) cout << "失败...." << endl;
+	cout << "compress ok" << endl;
+
+	if (uncompress("readme.lxg","uncompress.txt") == false) cout << "uncompress 失败...." << endl;
+	cout << "uncompress ok" << endl;
+}
+
+void printArr(codeMap map, int length){
+	char tmp = '\0';
+	for (int i = 0; i < length; i++){
+		tmp = i;
+		cout << tmp << " huffman code is  : " << map[i] << endl;
+	}
+}
+
+bool printBasicDatas(pHuffman pHuffm,int length){
+	if (pHuffm == NULL) return false;
+	for (int i = 0; i < length; i++){
+		cout << "index : " << i << "\tval : " << pHuffm[i].val << "\tweight : " << pHuffm[i].weight << "\tleftChrid : "
+			<< pHuffm[i].leftChird << "\trightChird : " << pHuffm[i].rightChird << "\tparentNode : "
+			<< pHuffm[i].parentNode << endl;//*/
+	}
+	return true;
+}
+

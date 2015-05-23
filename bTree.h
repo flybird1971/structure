@@ -9,6 +9,7 @@
 
 #include <stdio.h>
 #include <iostream>
+#include "stack.h"
 
 const int BIN_TREE_DIRECTOR_LEFT = 0;
 const int BIN_TREE_DIRECTOR_RIGHT = 1;
@@ -27,6 +28,8 @@ typedef struct bin_tree_node{
 }bTreeNode, *pBTreeNode, bTree, *pBTree;
 
 typedef void(*dealBTree)(bTreeType &);
+typedef void(*dealBTEx)(pBTree , stack &);
+
 
 //********************* 基本操作 ***********************
 pBTree createBTree(bTreeType dataArr[], int length, int index);  //以数组形式创建二叉树
@@ -47,5 +50,7 @@ pBTree getBTreeRightChird(pBTree pTr, bTreeType val); //获取右孩子
 int  getBTreeDepth(pBTree pTr);  //获取树深
 bool isEmptyBTree(pBTree pTr);   //判断是否为空
 
-void dealBT(bTreeType &val);     //遍历处理器
+void dealBT(bTreeType &val);            //遍历处理器
+void dealBTreeEx(pBTree pTr, stack &Stack);//遍历处理器
 bool traversalBTree(pBTree pTr, dealBTree dealBTS, int order); //前序遍历 中序遍历 后序遍历
+bool traversalBTree(pBTree pTr, dealBTEx dealBTreeEx, int order, stack &Stack);
