@@ -25,7 +25,7 @@ void main(){
 	//debugBTree();   //二叉树调试
 	//findLeafPath();
 	//haffmanTree();
-	haffmanEcode();
+	//haffmanEcode();
 
 	//矩阵运算调试
 	//debugMatrix();

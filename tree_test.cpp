@@ -258,9 +258,10 @@ void haffmanTree(){
 	cout << "--------------------------------------------------" << endl;
 	printArr(map,MAX_BUFFER);
 	cout << "--------------------------------------------------" << endl;
+	int length = 0;
 	string val;
 	string code = "000011011111";
-	decode(huffmTree, root,root, code, val);
+	decode(huffmTree, root, code, val,length);
 	cout << "decode 000 is " << val << endl;
 	destoryHuffman(huffmTree);
 }
@@ -281,10 +282,10 @@ void haffmanEcode(){
 	//printArr(map,MAX_BUFFER);
 
 	if (compress("ReadMe.txt", "readme.lxg") == false) cout << "Ê§°Ü...." << endl;
-	cout << "ok" << endl;
+	cout << "compress ok" << endl;
 
-	if (uncompress("readme.lxg","uncompress.txt") == false) cout << "Ê§°Ü...." << endl;
-	cout << "ok" << endl;
+	if (uncompress("readme.lxg","uncompress.txt") == false) cout << "uncompress Ê§°Ü...." << endl;
+	cout << "uncompress ok" << endl;
 }
 
 void printArr(codeMap map, int length){

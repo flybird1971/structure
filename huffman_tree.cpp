@@ -91,7 +91,7 @@ bool destoryHuffman(pHuffman &pHuffm){
 bool compress(const char* inFile, const char* outFile){
 	FILE* inHandle, *outHandle;
 	fopen_s(&inHandle, inFile, "rb"); 
-	fopen_s(&outHandle, outFile, "w+");
+	fopen_s(&outHandle, outFile, "wb+");
 	if (inHandle == NULL || outHandle == NULL) return false;
 
 	//写头信息
@@ -105,6 +105,7 @@ bool compress(const char* inFile, const char* outFile){
 	pHuffm = initHuffman(pHuffm, count); //生成哈弗曼树
 	int root = findHuffmanTreeRoot(pHuffm);
 	getPath(pHuffm, root, dealHuffman, map); //生成编码
+	//printArr(map, MAP_LENGTH);
 	compressInfos(map, inHandle, outHandle); //压缩文件
 
 	fclose(inHandle);
@@ -123,6 +124,10 @@ bool compressInfos(codeMap &map, FILE* &inHandle, FILE* &outHnadle){
 		i = 0;
 		while ( i<MAX_BUFFER){
 			tmpNum = 0;
+			if (buff[i] == '\0'){  //除去bom头
+				i++;
+				continue;
+			}
 			tmp = map[buff[i]];
 			while (tmp[tmpNum] != '\0'){
 				str[index/8] = str[index/8] | ( (tmp[tmpNum]-'0')<<(index%8) );
@@ -189,14 +194,12 @@ bool uncompress(const char* inFile, const char* outFile){
 	int length = 0;
 	FILE* inHandle, *outHnadle;
 	fopen_s(&inHandle, inFile, "rb");  
-	fopen_s(&outHnadle, outFile, "w+"); 
+	fopen_s(&outHnadle, outFile, "wb+"); 
 	if (inHandle == NULL || outHnadle == NULL) return false;
 
 	pHuffman pHuffm = readHeaderInfos(inHandle, length);
-	cout << "length : " << length << endl;
-	printBasicDatas(pHuffm, length);
-	//pHuffm = initHuffman(pHuffm, length);
-	//if (recoverInfos(pHuffm, inHandle, outHnadle) == false) return false;
+	pHuffm = initHuffman(pHuffm, length);
+	if (recoverInfos(pHuffm, inHandle, outHnadle) == false) return false;
 	fclose(inHandle);
 	fclose(outHnadle);
 	return true;
@@ -210,39 +213,38 @@ pHuffman readHeaderInfos(FILE* &inHandle, int &length){
 	char* buffer = (char*)pTmp;
 	if (fread(buffer, sizeof(char), length, inHandle) == 0) return NULL;
 	pHuffman pRes = (pHuffman)buffer;
-	cout << "weight :　" << pRes[10].weight << "\tval : " << pRes[10].val
-		<< "\tleftchird : " << pRes[10].leftChird << endl;
 	length = length / sizeof(huffman);
 	return pRes;
 }
 //恢复压缩信息
 bool recoverInfos(pHuffman pHuffm, FILE* &inHandle, FILE* &outHnadle){
-	int indexRes;
-	int num = 0;
-	char buff[MAX_BUFFER * 8];
-	char str[MAX_BUFFER];
+	int indexRes, num, i,root,length;
+	num = 0;
+	root = findHuffmanTreeRoot(pHuffm);
+	char buff[MAX_BUFFER];
+	char str[MAX_BUFFER*8+1];
+	string strRes;
 	pHuffman pTmp = pHuffm;
-	while (num = fread(buff, 1, MAX_BUFFER * 8, inHandle) != 0){
-		int i = 0;
-		indexRes = 0;
-		while (i < num){
-			if (buff[i] == 0) pTmp = pHuffm + pHuffm->leftChird;
-			if (buff[i] == 1) pTmp = pHuffm + pHuffm->rightChird;
-			if (pTmp->leftChird == -1 && pTmp->rightChird == -1){
-				str[indexRes++] = pTmp->val;
-				if (indexRes == MAX_BUFFER){
-					if (fwrite(str, sizeof(char), MAX_BUFFER, outHnadle) != MAX_BUFFER) return false;
-					indexRes = 0;
-				}
-				pTmp = pHuffm;
+	while (num = fread(buff, sizeof(char), MAX_BUFFER, inHandle) != 0){
+		indexRes = i = 0;
+		while (i < MAX_BUFFER*8){
+			str[indexRes] = (buff[i/8] & (1 << (i % 8)) >> (i%8))+48;
+			cout << str[indexRes] << " ";
+			if (++indexRes == MAX_BUFFER*8){
+				str[indexRes] = '\0';
+				decode(pHuffm, root, str, strRes,length);
+				cout << strRes;
+				if (fwrite(&strRes, sizeof(char), length, outHnadle) == 0) return false;
+				indexRes = 0;
 			}
 			i++;
 		}
-		num = 0;
 	}
 
 	if (indexRes != 0){
-		if (fwrite(str, sizeof(char), indexRes, outHnadle) != indexRes) return false;
+		str[indexRes] = '\0';
+		decode(pHuffm, root, str, strRes, length);
+		if (fwrite(&strRes, sizeof(char), length, outHnadle) == 0) return false;
 	}
 	return true;
 }
@@ -251,7 +253,7 @@ bool recoverInfos(pHuffman pHuffm, FILE* &inHandle, FILE* &outHnadle){
 pHuffman compactMap(pHuffman pHuffm, int &length){
 	if (pHuffm == NULL) return NULL;
 	int count = 0;
-	for (int i = 0; i < MAP_LENGTH; i++){
+	for (int i = 1; i < MAP_LENGTH; i++){
 		if (pHuffm[i].weight > 0) count++;
 	}
 	void *pTmp = malloc(sizeof(huffman)*count);
@@ -262,7 +264,7 @@ pHuffman compactMap(pHuffman pHuffm, int &length){
 	length = count;
 	int index = 0;
 	pHuffman pRes = (pHuffman)pTmp;
-	for (int i = 0; i < MAP_LENGTH; i++){
+	for (int i = 1; i < MAP_LENGTH; i++){
 		if (pHuffm[i].weight > 0){
 			pRes[index].val = pHuffm[i].val;
 			pRes[index].weight = pHuffm[i].weight;
@@ -315,16 +317,19 @@ void dealHuffman(pHuffman pHuffm,int offset,codeMap map){
 }
 
 //解析编码
-bool decode(pHuffman pHuffm, int root,int currentIndex, string code,string &val){
-	if (pHuffm == NULL || root == -1 || currentIndex==-1) return false;
+bool decode(pHuffman pHuffm, int root, string code,string &val,int &length){
+	if (pHuffm == NULL || root == -1 ) return false;
 
+	length = 0;
 	int index = 0;
-	while (code[index] != '\0'){
+	int currentIndex = root;
+	while (code[index]!='\0'){
 		if (code[index] == '0') currentIndex = pHuffm[currentIndex].leftChird;
 		if (code[index] == '1') currentIndex = pHuffm[currentIndex].rightChird;
 		if (pHuffm[currentIndex].leftChird == -1 && pHuffm[currentIndex].rightChird == -1){
 			val += pHuffm[currentIndex].val;
 			currentIndex = root;
+			length++;
 		}
 		index++;
 	}

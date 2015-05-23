@@ -52,4 +52,4 @@ void dealHuffman(pHuffman pHuffm, int offset, codeMap map);
 
 void show(pHuffman pHuffm);
 pHuffman compactMap(pHuffman pHuffm, int &length);
-bool decode(pHuffman pHuffm, int root, int currentIndex, string code, string &val);
+bool decode(pHuffman pHuffm, int root, string code, string &val, int &length);
