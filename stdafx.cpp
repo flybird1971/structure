@@ -12,6 +12,7 @@
 #include "maze_test.h"
 #include "matrix_test.h"
 #include "tree_test.h"
+#include "graph_test.h"
 
 using namespace std;
 
@@ -20,16 +21,20 @@ using namespace std;
 void main(){
 
 	cout << "............... start ...................... "<<endl;
+
+	//Í¼
+	debugGraph();  //Í¼ÆÕÍ¨µ÷ÊÔ
+
 	//Ê÷
-	//debugTree();
+	//debugTree();    //ÆÕÍ¨Ê÷
 	//debugBTree();   //¶þ²æÊ÷µ÷ÊÔ
-	//findLeafPath();
-	//haffmanTree();
-	//haffmanEcode();
+	//findLeafPath(); //²éÕÒÒ¶×ÓÂ·¾¶
+	//haffmanTree();  //¹þ¸¥ÂüÊ÷
+	//haffmanEcode(); //ÎÄ¼þÑ¹ËõÓë½âÑ¹
 
 	//¾ØÕóÔËËãµ÷ÊÔ
-	//debugMatrix();
-	//debugSparseMatrix();
+	//debugMatrix();         //¾ØÕó
+	//debugSparseMatrix();   //Ï¡Êè¾ØÕóµ÷ÊÔ
 
 	//Õ»
 	//maze();  //ÐèÒªÐÞ¸Ästack.h & stack.cpp & maze.h & maze.cppÎÄ¼þ
