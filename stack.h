@@ -17,7 +17,7 @@ typedef int stackType;
 //½Úµã
 typedef struct stack_node{
 	stackType values[STACK_LENGTH];
-	unsigned int top;
+	int top;
 }stack, *pStack;
 
 /* 6 basic operation  */
