@@ -9,13 +9,14 @@
 
 #include <stdio.h>
 #include <iostream>
-
+#include "queue.h"
+#include "stack.h"
 
 typedef int graphNode;
-const int MAX_WEIGHT	= 100000;
-const int IN_DEGREE		= 1;
-const int OUT_DEGREE	= 2;
-const int IN_OUT_DEGREE = 3;
+const int MAX_WEIGHT_GRAPH	= 100000;
+const int IN_DEGREE			= 1;
+const int OUT_DEGREE		= 2;
+const int IN_OUT_DEGREE		= 3;
 
 typedef struct graph_struct{
 	graphNode * data;
@@ -38,8 +39,8 @@ typedef struct triple_data{
 typedef void(*dealGraph)(pGraph pgraph, int index);
 
 //********************* 基本操作 ***********************
+pGraph initGrap(pTriple data, unsigned size, int length, bool isDirected);
 pGraph initGrap(pGraph pgraph);
-pGraph initGrap(graphNode* data, unsigned size);
 bool clearGrap(pGraph pgraph);
 bool destoryGraph(pGraph &pGraph);
 
@@ -50,15 +51,29 @@ void dealgraph(pGraph pgraph, int index);
 bool isVisited(int *visited, int length, int val);
 bool pushNextHopsQueue(pGraph pgraph, int index, int* visited, int &length, queue &nodeQueue);
 bool pushNextHopsStack(pGraph pgraph, int index, int* visited, int &length, stack &nodeStack);
+void showGraph(pGraph pgraph);
 
-bool checkCircle(pGraph pgraph, int index);
-graphPath getMinWeight(pGraph pgraph);
+//********************* 生成最小树 ***********************
+//生成最小树，kruskal算法
 pGraph productMinTreeKruskal(pGraph pgraph);
-pGraph productMinTreePrim(pGraph pgraph);
+graphPath getMinWeight(pGraph pgraph); //无向图
+bool checkCircle(pGraph pgraph, int index);
 
+//生成最小树，prim算法
+pGraph productMinTreePrim(pGraph pgraph);
+void createArr(int size, int* &usedArr, int &usedLength, int* &unusedArr, int &unusedLength);
 graphPath findMinWeight(pGraph pgraph, int* usedArr, int usedLength, int* unusedArr, int unusedLength);
-bool getNodeByDegree(pGraph pgraph, int degree, stack &Stack, int director);
-void unset(int *unusedArr, int &unusedLength, int val)
+void unset(int *unusedArr, int &unusedLength, int val);
+
+//********************* 拓扑排序 ***********************
+void topologicalSort(pGraph pgraph, queue & sortQueue);
+void clearWeigth(pGraph pgraph, int index);
+bool getNodeByDegree(pGraph pgraph, int degree, queue& sortQueue, stack &Stack, int director); //有向图 入度求解
+
+//********************* 最短路径 ***********************
+
+//********************* 关键路径 ***********************
+
 
 
 

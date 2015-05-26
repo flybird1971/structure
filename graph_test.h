@@ -10,7 +10,8 @@
 #include <iostream>
 #include "graph.h"
 
-void debugGraph();   //图普通调试
+
+void debugGraph(); //图普通调试
 
 void debugProductTree();  //生成最小数，ku&prim算法调试
 

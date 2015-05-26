@@ -13,26 +13,32 @@
 #include "graph.h"
 #include "queue.h"
 #include "stack.h"
+#include "extendsEx.h"
 
 using namespace std;
 
 //********************* 基本操作 ***********************
-//创建 销毁
-pGraph initGrap(pTriple data, unsigned size, int length){
+//创建 销毁  参加graph_test.cpp中使用demo
+pGraph initGrap(pTriple data, unsigned size, int length,bool isDirected){
 	if (data == NULL || size < 1 || length<1) return NULL;
 	void *pTmp = malloc(sizeof(graphNode)*size*size);
 	if (pTmp == NULL) return NULL;
 
-	pGraph pgraph;
+	void *pTmpGraph = malloc(sizeof(graph));
+	if (pTmpGraph == NULL) return NULL;
+	pGraph pgraph = (pGraph)pTmpGraph;
 	pgraph->data = (graphNode*)pTmp;
 	pgraph->nodeNum = size;
-	for (int i = 0; i < size; i++){
+	for (int i = 0; i < size*size; i++){
 		pgraph->data[i] = 0;
 	}
 	
 	int index = 0;
 	for (int i = 0; i < length; i++){
 		index = data[i].y*size + data[i].x;
+		pgraph->data[index] = data[i].weight;
+		if (isDirected == true) continue;
+		index = data[i].x*size + data[i].y;
 		pgraph->data[index] = data[i].weight;
 	}
 	return pgraph;
@@ -42,23 +48,23 @@ pGraph initGrap(pGraph pgraph){
 	void *pTmp = malloc(sizeof(graphNode)*pgraph->nodeNum*pgraph->nodeNum);
 	if (pTmp == NULL) return NULL;
 
-	pGraph pRes;
+	void *pTmpGraph = malloc(sizeof(graph));
+	if (pTmpGraph == NULL) return NULL;
+	pGraph pRes = (pGraph)pTmpGraph;
 	pRes->data = (graphNode*)pTmp;
 	pRes->nodeNum = pgraph->nodeNum;
 
-	for (int i = 0; i < pgraph->nodeNum; i++){
-		for (int k = 0; k < pgraph->nodeNum; k++){
-			pRes->data[i*pgraph->nodeNum + k] = pgraph->data[i*pgraph->nodeNum + k];
-		}
+	int length = pgraph->nodeNum * pgraph->nodeNum;
+	for (int i = 0; i < length; i++){
+			pRes->data[i] = pgraph->data[i];
 	}
 	return pRes;
 }
 bool clearGrap(pGraph pgraph){
 	if (pgraph == NULL) return false;
-	for (int i = 0; i < pgraph->nodeNum; i++){
-		for (int k = 0; k < pgraph->nodeNum; k++){
-			pgraph->data[i*pgraph->nodeNum + k] = 0;
-		}
+	int length = pgraph->nodeNum * pgraph->nodeNum;
+	for (int i = 0; i < length; i++){
+		pgraph->data[i] = 0;
 	}
 	return true;
 }
@@ -66,6 +72,7 @@ bool destoryGraph(pGraph &pgraph){
 	if (pgraph == NULL) return false;
 	if (pgraph->nodeNum>0) free(pgraph->data);
 	free(pgraph);
+	pgraph = NULL;
 	return true;
 }
 
@@ -86,15 +93,36 @@ bool traversalBoradGraph(pGraph &pgraph, dealGraph dealF){
 		dealF(pgraph, index);
 		pushNextHopsQueue(pgraph, index, visited, length, nodeQueue);
 	}
+	free(visited);
+	destoryQueue(nodeQueue);
 }
-bool pushNextHopsQueue(pGraph pgraph,int index,int* visited,int &length,queue &nodeQueue){
+bool pushNextHopsQueue(pGraph pgraph, int index, int* visited, int &length, queue &nodeQueue){
 	int i = 0;
-	while (i++ < pgraph->nodeNum){
-		if (pgraph->data[i*pgraph->nodeNum + index] < 1) continue;
-		if (isVisited(visited, length, i) == true) continue;
-		pushQueue(nodeQueue, i);
-		visited[length++] = i;
+	while (i < pgraph->nodeNum){
+		if (pgraph->data[i*pgraph->nodeNum + index] < 1){
+		}else if (isVisited(visited, length, i) == true){
+		}else{
+			if (pushQueue(nodeQueue, i) == false) return false;
+			visited[length++] = i;
+		}
+		i++;
 	}
+	return true;
+}
+bool isVisited(int *visited, int length, int val){
+	for (int k = 0; k < length; k++){
+		if (visited[k] == val) return true;
+	}
+	return false;
+}
+void dealgraph(pGraph pgraph, int index){
+	int k;
+	cout << "node is " << index << "\t\tweight is ";
+	for (int i = 0; i < pgraph->nodeNum; i++){
+		k = index*pgraph->nodeNum + i;
+		if (pgraph->data[k] > 0) cout << index << "=>" << i << "\t";
+	}
+	cout << endl;
 }
 
 //深度遍历
@@ -114,46 +142,34 @@ bool traversalDepthGraph(pGraph &pgraph, dealGraph dealF){
 		dealF(pgraph,index);
 		pushNextHopsStack(pgraph, index, visited, length, nodeStack);
 	}
+	free(visited);
+	destoryStack(nodeStack);
 }
 bool pushNextHopsStack(pGraph pgraph, int index, int* visited, int &length, stack &nodeStack){
 	int i = 0;
-	while (i++ < pgraph->nodeNum){
-		if (pgraph->data[i*pgraph->nodeNum + index] < 1) continue;
-		if (isVisited(visited, length, i) == true) continue;
-		pushStack(nodeStack, i);
-		visited[length++] = i;
-	}
-}
-
-bool isVisited(int *visited, int length,int val){
-	for (int k = 0; k < length; k++){
-		if (visited[k] == val) return true;
+	while (i < pgraph->nodeNum){
+		if (pgraph->data[i*pgraph->nodeNum + index] < 1){
+		}else if (isVisited(visited, length, i) == true){
+		}else{
+			if (pushStack(nodeStack, i) == false) return false;
+			visited[length++] = i;
+		}
+		i++;
 	}
 	return false;
 }
-void dealgraph(pGraph pgraph,int index){
-	cout <<"values is "<< pgraph->data[index] << "\t";
+
+//打印矩阵
+void showGraph(pGraph pgraph){
+	for (int i = 0; i < pgraph->nodeNum*pgraph->nodeNum; i++){
+		cout << pgraph->data[i] << "\t";
+		if ((i + 1) % pgraph->nodeNum == 0) cout << endl << endl;
+	}
 }
 
-//无向图
-graphPath getMinWeight(pGraph pgraph){
-	graphPath path;
-	path.weight = MAX_WEIGHT;
-	path.start = -1;
-	path.end = -1;
-	if (pgraph == NULL) return path;
-	for (int i = 0; i < pgraph->nodeNum; i++){
-		for (int k = 0; k < i; k++){
-			if (pgraph->data[i*pgraph->nodeNum + k] < 1) continue;
-			path.weight = path.weight<=pgraph->data[i*pgraph->nodeNum + k] ? pgraph->data[i*pgraph->nodeNum + k] : path.weight;
-			path.start  = path.weight<=pgraph->data[i*pgraph->nodeNum + k] ? i : path.start;
-			path.end    = path.weight<=pgraph->data[i*pgraph->nodeNum + k] ? k : path.end;
-		}
-	}
-	pgraph->data[path.start*pgraph->nodeNum + path.end] = 0;
-	pgraph->data[path.end*pgraph->nodeNum + path.start] = 0;
-	return path;
-}
+
+//********************* 生成最小树 ***********************
+//生成最小树，kruskal算法
 pGraph productMinTreeKruskal(pGraph pgraph){
 	if (pgraph == NULL) return NULL;
 	pGraph pTmp = initGrap(pgraph);
@@ -161,11 +177,11 @@ pGraph productMinTreeKruskal(pGraph pgraph){
 	clearGrap(pRes);
 	graphPath path;
 	int num = 0;
-	while(num<pgraph->nodeNum-1){
+	while (num<pgraph->nodeNum - 1){
 		path = getMinWeight(pTmp);
 		pRes->data[path.start*pRes->nodeNum + path.end] = path.weight;
 		pRes->data[path.end*pRes->nodeNum + path.start] = path.weight;
-		if (checkCircle(pRes,path.start) == false){
+		if (checkCircle(pRes, path.start) == true){
 			num++;
 			continue;
 		}
@@ -175,59 +191,109 @@ pGraph productMinTreeKruskal(pGraph pgraph){
 	destoryGraph(pTmp);
 	return pRes;
 }
-bool checkCircle(pGraph pgraph,int index){
-	return true;
-}
-pGraph productMinTreePrim(pGraph pgraph){
-	void *pTmp = malloc(sizeof(int)*pgraph->nodeNum);
-	if (pTmp == NULL) return NULL;
-	int* usedArr = (int*)pTmp;
-	int usedLength = 0;
-	usedArr[usedLength++] = 0;
-
-	void *pTmp = malloc(sizeof(int)*pgraph->nodeNum);
-	if (pTmp == NULL) return NULL;
-	int* unusedArr = (int*)pTmp;
-	int unusedLength = 0;
-	for (int i = 1; i < pgraph->nodeNum; i++){
-		unusedArr[unusedLength++] = 1;
+//无向图
+graphPath getMinWeight(pGraph pgraph){
+	graphPath path;
+	path.weight = MAX_WEIGHT_GRAPH;
+	path.start = -1;
+	path.end = -1;
+	int index;
+	if (pgraph == NULL) return path;
+	for (int i = 0; i < pgraph->nodeNum; i++){
+		for (int k = 0; k < i; k++){
+			index = i*pgraph->nodeNum + k;
+			if (pgraph->data[index] < 1) continue;
+			path.start = path.weight> pgraph->data[index] ? i : path.start;
+			path.end = path.weight > pgraph->data[index] ? k : path.end;
+			path.weight = path.weight>pgraph->data[index] ? pgraph->data[index] : path.weight;
+		}
 	}
+	if (path.start == -1 || path.end == -1) return path;
+	pgraph->data[path.start*pgraph->nodeNum + path.end] = 0;
+	pgraph->data[path.end*pgraph->nodeNum + path.start] = 0;
+	return path;
+}
+//是否有回路
+bool checkCircle(pGraph pgraph, int index){
+	int  nodeNum = 0;
+	int  pathNum = 0;
+	bool mark;
+	for (int i = 0; i < pgraph->nodeNum; i++){
+		mark = false;
+		for (int k = 0; k < pgraph->nodeNum; k++){
+			if (pgraph->data[i*pgraph->nodeNum + k] > 0){
+				pathNum++;
+				mark = true;
+			}
+		}
+		if (mark == true) nodeNum++;
+	}
+	return nodeNum > pathNum/2;
+}
+
+//生成最小树，prim算法
+pGraph productMinTreePrim(pGraph pgraph){
+	int size, usedLength, unusedLength;
+	int *usedArr, *unusedArr;
+	size = pgraph->nodeNum;
+	createArr(size, usedArr, usedLength, unusedArr, unusedLength);
 	pGraph pRes = initGrap(pgraph);
+	pGraph pTmp = initGrap(pgraph);
 	clearGrap(pRes);
 
 	graphPath path;
-	while (usedLength == pgraph->nodeNum){
-		path = findMinWeight(pgraph, usedArr, usedLength, unusedArr, unusedLength);
+	while (usedLength != pgraph->nodeNum){
+		path = findMinWeight(pTmp, usedArr, usedLength, unusedArr, unusedLength);
 		pRes->data[path.start*pRes->nodeNum + path.end] = path.weight;
+		pRes->data[path.end*pRes->nodeNum + path.start] = path.weight;
 		usedArr[usedLength++] = path.end;
 		unset(unusedArr, unusedLength,path.end);
 	}
+	free(unusedArr);
+	free(usedArr);
+	destoryGraph(pTmp);
 	return pRes;
 }
-
 graphPath findMinWeight(pGraph pgraph,int* usedArr,int usedLength,int* unusedArr,int unusedLength){
 	int index;
 	graphPath path;
 	path.start = -1;
 	path.end = -1;
-	path.weight = MAX_WEIGHT;
+	path.weight = MAX_WEIGHT_GRAPH;
 	for (int i = 0; i < usedLength; i++){
 		for (int k = 0; k < unusedLength; k++){
-			index = usedArr[i]*pgraph->nodeNum + unusedArr[k];
+			index = usedArr[i] * pgraph->nodeNum + unusedArr[k];
 			if (pgraph->data[index] < 1) continue;
+			path.start = path.weight > pgraph->data[index] ? usedArr[i] : path.start;
+			path.end = path.weight > pgraph->data[index] ? unusedArr[k] : path.end;
 			path.weight = path.weight > pgraph->data[index] ? pgraph->data[index] : path.weight;
-			path.start = path.weight > pgraph->data[index] ? i : path.start;
-			path.end = path.weight > pgraph->data[index] ? k : path.end;
 		}
 	}
+	pgraph->data[path.start*pgraph->nodeNum + path.end] = 0;
+	pgraph->data[path.end*pgraph->nodeNum + path.start] = 0;
 	return path;
 }
+void createArr(int size,int* &usedArr,int &usedLength,int* &unusedArr,int &unusedLength){
+	void *pTmp = malloc(sizeof(int)*size);
+	if (pTmp == NULL) return ;
+	usedArr = (int*)pTmp;
+	usedLength = 0;
+	usedArr[usedLength++] = 0;
 
+	pTmp = malloc(sizeof(int)*size);
+	if (pTmp == NULL) return ;
+	unusedArr = (int*)pTmp;
+	unusedLength = 0;
+	for (int i = 1; i < size; i++){
+		unusedArr[unusedLength++] = i;
+	}
+}
 void unset(int *unusedArr, int &unusedLength,int val){
 	for (int i = 0; i < unusedLength; i++){
 		if (unusedArr[i] == val){
 			while (i<unusedLength - 1){
-				unusedArr[i] = unusedArr[i + 1];
+				unusedArr[i] = unusedArr[i+1];
+				i++;
 			}
 			unusedLength--;
 			break;
@@ -235,11 +301,36 @@ void unset(int *unusedArr, int &unusedLength,int val){
 	}
 }
 
+
+
+//********************* 拓扑排序 ***********************
+void topologicalSort(pGraph pgraph,queue & sortQueue){
+	if (pgraph == NULL) return ;
+	pGraph pTmp = initGrap(pgraph);
+	int i;
+	stack Stack; initStack(Stack);
+	while (getNodeByDegree(pTmp, 0,sortQueue, Stack, IN_DEGREE)==true){
+		travservalStack(Stack);
+		while (popStack(Stack, i) == true){
+			pushQueue(sortQueue, i);
+			clearWeigth(pTmp, i);
+		}
+	}
+	destoryStack(Stack);
+}
+//将所有与index相关的路径权值置零
+void clearWeigth(pGraph pgraph, int index){
+	if (pgraph == NULL) return;
+	for (int i = 0; i < pgraph->nodeNum; i++){
+		pgraph->data[index*pgraph->nodeNum + i] = 0;
+	}
+}
 //有向图 入度求解
-bool getNodeByDegree(pGraph pgraph, int degree,stack &Stack,int director){
+bool getNodeByDegree(pGraph pgraph, int degree,queue& sortQueue,stack &Stack,int director){
 	if (pgraph == NULL) return false;
 	int tmpDegree = 0;
 	for (int i = 0; i < pgraph->nodeNum; i++){
+		if (locateQueue(sortQueue, i) == true) continue;
 		for (int k = 0; k < pgraph->nodeNum; k++){
 			if (director == IN_DEGREE || director == IN_OUT_DEGREE){
 				if (pgraph->data[k*pgraph->nodeNum + i] > 0) tmpDegree++;
@@ -247,8 +338,16 @@ bool getNodeByDegree(pGraph pgraph, int degree,stack &Stack,int director){
 				if (pgraph->data[i*pgraph->nodeNum + k] > 0) tmpDegree++;
 			}
 		}
-		if (tmpDegree = degree) pushStack(Stack, i);
-		degree = 0;
+		if (tmpDegree == degree) pushStack(Stack, i);
+		tmpDegree = 0;
 	}
+	return getStackLength(Stack) > 0;
 }
+
+//********************* 最短路径 ***********************
+
+//********************* 关键路径 ***********************
+
+
+
 

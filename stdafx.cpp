@@ -23,7 +23,11 @@ void main(){
 	cout << "............... start ...................... "<<endl;
 
 	//图
-	debugGraph();  //图普通调试
+	//debugGraph();  //图普通调试
+	//debugProductTree();  //最小生成树
+	//topologicalSort();     //拓扑排序
+	minimalApproach(); //最小路径
+	//criticalPath(); //关键路径
 
 	//树
 	//debugTree();    //普通树
