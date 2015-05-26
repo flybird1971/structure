@@ -95,6 +95,15 @@ void travservalQueue(queue &qList, dealQ fun){
 	}
 }
 
+bool locateQueue(queue qList, queueValType val){
+	pQNode pCurrent = qList.front->next;
+	while (pCurrent != NULL){
+		if (pCurrent->value == val) return true;
+		pCurrent = pCurrent->next;
+	}
+	return false;
+}
+
 void fun(queueValType &val){
 	cout << val << "\t";
 	val = val + 1;
