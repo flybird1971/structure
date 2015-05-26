@@ -50,6 +50,12 @@ bool popStack(stack &st, stackType &val){
 	return true;
 }
 
+bool getPopStack(stack &st, stackType &val){
+	if (st.top - 1 < 0) return false;
+	val = st.values[st.top-1];
+	return true;
+}
+
 int  getStackLength(stack st){
 	return st.top;
 }
