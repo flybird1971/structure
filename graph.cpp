@@ -345,6 +345,92 @@ bool getNodeByDegree(pGraph pgraph, int degree,queue& sortQueue,stack &Stack,int
 }
 
 //********************* 最短路径 ***********************
+void minimalApproach(pGraph pgraph,int beginPoint,int endPoint,stack& path){
+	queue visited; 
+	initQueue(visited);
+	
+	pushStack(path, beginPoint);
+	pushQueue(visited,beginPoint);
+	pPathNode pPath = initMinialApproach(pgraph, beginPoint);
+
+	int tmpVal;
+	int num = 0;
+	while (num <pgraph->nodeNum-1 ){
+		int min = getMinPath(pPath,visited,pgraph->nodeNum);
+		cout << "mini " << min << endl;
+		updatePathWeight(pPath, pgraph,min,beginPoint);
+		cout << "after update "<<pPath[endPoint].currentNode << endl;
+		getPopStack(path, tmpVal);
+		if (pPath[endPoint].currentNode != tmpVal) pushStack(path, pPath[endPoint].currentNode);
+		num++;
+		cout << "---------------" << endl;
+		travservalStack(path);
+	}
+	free(pPath);
+	destoryQueue(visited);
+	destoryStack(path);
+}
+
+void updatePathWeight(pPathNode pPath,pGraph pgraph,int min,int beginPoint){
+	int newVal,val,index,next;
+	int i = 0;
+	while (i < pgraph->nodeNum){
+		if (i == beginPoint){
+			i++; continue;
+		}
+		index = pPath[i].currentNode * pgraph->nodeNum + min;
+		next = min*pgraph->nodeNum + i;
+		if (pgraph->data[index] == 0 || pgraph->data[next] == 0){
+			i++; continue;
+		}
+
+		newVal = pgraph->data[index] + pgraph->data[next];
+		val = pgraph->data[pPath[i].currentNode*pgraph->nodeNum + i];
+		if (val == 0){
+			pPath[i].currentNode = i;
+			pPath[i].val = newVal;
+			i++; continue;
+		}
+		
+		pPath[i].currentNode = newVal < val ? i : pPath[i].currentNode;
+		pPath[i].val = newVal < val ? pPath[i].val - val + newVal : pPath[i].val;
+	}
+}
+
+//取当前最小值
+int getMinPath(pPathNode pPath,queue& visited,int length){
+	int min, i, pathWeight;
+	i = 0;
+	min = -1;
+	pathWeight = MAX_WEIGHT_GRAPH;
+	while (i<length){
+		if (locateQueue(visited, i) == false){
+			min = pathWeight>=pPath[i].val ? i : min;
+			pathWeight = pathWeight>=pPath[i].val ? pPath[i].val : pathWeight;
+		}
+		i++;
+	}
+	pushQueue(visited, min);
+	return min;
+}
+
+//初始化队列
+pPathNode initMinialApproach(pGraph pgraph,int beginPoint){
+	if (pgraph == NULL) return false;
+	void *pTmp = malloc(sizeof(pathNode)*(pgraph->nodeNum));
+	if (pTmp == NULL) return NULL;
+	pPathNode pPath = (pPathNode)pTmp;
+
+	int data;
+	for (int i = 0; i < pgraph->nodeNum; i++){
+		data = pgraph->data[beginPoint*pgraph->nodeNum + i];
+		data = data < 1 ? MAX_WEIGHT_GRAPH : data;
+		pPath[i].val = data;
+		pPath[i].currentNode = beginPoint;
+	}
+	return pPath;
+}
+
 
 //********************* 关键路径 ***********************
 

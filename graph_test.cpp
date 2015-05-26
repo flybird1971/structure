@@ -60,11 +60,19 @@ void topologicalSort(){
 }
 
 //最小路径
-void minimalApproach(){
-
+void debugMinimalApproach(){
+	int data[][3] = { { 1, 0, 10 }, { 2, 0, 15 }, { 3, 1, 17 }, { 3, 2, 5 },
+	{ 6, 3, 20 }, { 5, 4, 6 }, { 4, 2, 3 }, { 5, 2, 1 }, { 5, 3, 9 }, };
+	pGraph pgraph = initGrap((pTriple)data, 7, 9, false);
+	showGraph(pgraph);
+	stack path; 
+	initStack(path);
+	minimalApproach(pgraph,0, 6,path);
+	cout << "length is " << getStackLength(path) << endl;
+	travservalStack(path);//*/
 }
 
 //关键路径
-void criticalPath(){
+void debugCriticalPath(){
 
 }

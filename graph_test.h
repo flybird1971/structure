@@ -17,6 +17,6 @@ void debugProductTree();  //生成最小数，ku&prim算法调试
 
 void topologicalSort();  //拓扑排序
 
-void minimalApproach(); //最小路径
+void debugMinimalApproach(); //最小路径
 
-void criticalPath(); //关键路径
+void debugCriticalPath(); //关键路径
