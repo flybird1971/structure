@@ -32,7 +32,7 @@ bool destoryStack(stack &st){
 }
 
 bool pushStack(stack &st, stackType val){
-	if (st.top + 1 == STACK_LENGTH) return false;
+	if (st.top == STACK_LENGTH) return false;
 	st.values[st.top] = val;
 	/**st.values[st.top][0] = val[0];
 	st.values[st.top][1] = val[1];
@@ -42,8 +42,8 @@ bool pushStack(stack &st, stackType val){
 }
 
 bool popStack(stack &st, stackType &val){
-	if (--st.top < 0) return false;
-	val = st.values[st.top];
+	if (st.top-1 < 0) return false;
+	val = st.values[--st.top];
 	/**val[0] = st.values[st.top][0];
 	val[1] = st.values[st.top][1];
 	val[2] = st.values[st.top][2];//*/

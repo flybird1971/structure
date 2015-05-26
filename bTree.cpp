@@ -175,7 +175,8 @@ bool traversalBTree(pBTree pTr, dealBTree dealBTS,int order){
 
 //前序遍历 中序遍历 后序遍历
 bool traversalBTree(pBTree pTr, dealBTEx dealBTreeEx, int order, stack &Stack){
-	char val = '\0';
+	//char val = '\0';
+	int val = '\0';   //此处要修改为上一行
 	if (pTr == NULL) return false;
 	if (order == BIN_TREE_TRAVERSAL_PREORDER) dealBTreeEx(pTr,Stack);
 	if(traversalBTree(pTr->leftChird, dealBTreeEx, order,Stack)==true) popStack(Stack, val);

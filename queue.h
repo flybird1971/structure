@@ -41,4 +41,6 @@ int  getQueueLength(queue qList);
 
 void travservalQueue(queue &qList, dealQ fun);
 
+bool locateQueue(queue qList, queueValType val);
+
 void fun(queueValType &);

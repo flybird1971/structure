@@ -11,13 +11,13 @@
 
 const int STACK_LENGTH = 1000;
 //typedef int(stackType)[3]; //求解迷宫，特殊需求
-//typedef int stackType;
-typedef char stackType;
+typedef int stackType;
+//typedef char stackType;
 
 //节点
 typedef struct stack_node{
 	stackType values[STACK_LENGTH];
-	unsigned int top;
+	int top;
 }stack, *pStack;
 
 /* 6 basic operation  */

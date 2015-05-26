@@ -64,6 +64,7 @@ bool pushQueue(queue &qList, queueValType val){
 	qList.rear = pNewNode;
 	pNewNode->next  = NULL;
 	pNewNode->value = val;
+	//cout << "length is " << qList.length << "\tvalue is " << val << endl;
 	pNewNode = NULL;
 	qList.length++;
 	return true;
@@ -77,6 +78,7 @@ bool popQueue(queue &qList, queueValType &val){
 	free(qList.front->next);
 	qList.front->next = pNextNode;
 	qList.length--;
+	if (qList.length == 0) qList.rear = qList.front;
 	return true;
 }
 
@@ -86,12 +88,23 @@ int  getQueueLength(queue qList){
 
 void travservalQueue(queue &qList, dealQ fun){
 	pQNode pCurrent = qList.front->next;
+	cout << "heloow" << endl;
 	while (pCurrent != NULL){
 		fun(pCurrent->value);
 		pCurrent = pCurrent->next;
 	}
 }
 
+bool locateQueue(queue qList, queueValType val){
+	pQNode pCurrent = qList.front->next;
+	while (pCurrent != NULL){
+		if (pCurrent->value == val) return true;
+		pCurrent = pCurrent->next;
+	}
+	return false;
+}
+
 void fun(queueValType &val){
+	cout << val << "\t";
 	val = val + 1;
 }
