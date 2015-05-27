@@ -13,6 +13,7 @@
 #include "matrix_test.h"
 #include "tree_test.h"
 #include "graph_test.h"
+#include "sort_test.h"
 
 using namespace std;
 
@@ -22,11 +23,17 @@ void main(){
 
 	cout << "............... start ...................... "<<endl;
 
+	//算法
+	//debugInsertSort();
+	//debugQuickSort();
+	//debugMergeSort();
+	//debugradixSort();
+
 	//图
 	//debugGraph();  //图普通调试
 	//debugProductTree();  //最小生成树
 	//topologicalSort();     //拓扑排序
-	debugMinimalApproach(); //最小路径
+	//debugMinimalApproach(); //最小路径
 	//debugCriticalPath(); //关键路径
 
 	//树
