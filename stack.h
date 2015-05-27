@@ -30,7 +30,7 @@ bool destoryStack(stack &st);
 bool pushStack(stack &st, stackType val);
 
 bool popStack(stack &st, stackType &val);
-
+bool getPopStack(stack &st, stackType &val);
 int  getStackLength(stack st);
 
 void travservalStack(stack st);
