@@ -40,3 +40,9 @@ void* createArrByType(int type,int size){
 	void *tmp = malloc(sizeMem);
 	return tmp;
 }
+
+void initArr(int* data,int lenght, int defaultVal){
+	for (int i = 0; i < lenght; i++){
+		data[i] = defaultVal;
+	}
+}

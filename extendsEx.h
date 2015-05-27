@@ -14,3 +14,4 @@ const int INT_TYPE  = 2;
 
 void printArr(int* arr, int size, int lineNum); //打印数组
 void* createArrByType(int type, int size);//开辟内存，模拟数组
+void initArr(int* data, int lenght, int defaultVal);
